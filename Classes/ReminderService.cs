@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -7,62 +6,90 @@ namespace HabitTrackerApp.Classes
 {
     public class ReminderService
     {
+        private CancellationTokenSource _cts = new();
+        private bool _hasStarted = false;
 
-        private Timer _timer;
-
-        public void SendReminder(List<Habit> habits, TimeSpan time)
+        public void SendReminders(List<Habit> habits, TimeSpan time)
         {
-            var now = DateTime.Now;
-            var nextRun = DateTime.Today.Add(time);
-            if (nextRun < now)
-                nextRun = nextRun.AddDays(1);
-
-            TimeSpan timeUntilReminder = nextRun - now;
-
-            Console.WriteLine($"⏰ Timer will trigger in: {timeUntilReminder.TotalMinutes:F2} minutes at {nextRun}");
-
-            _timer = new Timer(state =>
+            Task.Run(async () =>
             {
-                Console.WriteLine($"📨 Timer triggered at {DateTime.Now:T}. Attempting to send email...");
-
-                try
+                while (!_cts.IsCancellationRequested)
                 {
-                    var email = Environment.GetEnvironmentVariable("GOOGLE_APP_EMAIL");
-                    var password = Environment.GetEnvironmentVariable("GOOGLE_APP_PASSWORD");
+                    var now = DateTime.Now;
+                    var nextRun = DateTime.Today.Add(time);
 
-                    if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+                    // if it's already past the scheduled time today, wait until tomorrow
+                    if (nextRun < now)
+                        nextRun = nextRun.AddDays(1);
+
+                    var delay = nextRun - now;
+                    // if delay has negative value, make it 0
+                    if (delay < TimeSpan.Zero)
+                        delay = TimeSpan.Zero;
+                    Console.WriteLine($"⏳ Waiting {delay.TotalMinutes:F1} min until next reminder at {nextRun}");
+
+                    try
                     {
-                        Console.WriteLine("❌ Missing GOOGLE_APP_EMAIL or GOOGLE_APP_PASSWORD environment variables.");
-                        return;
+                        await Task.Delay(delay, _cts.Token);
+                        await SendEmailAsync(habits);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        Console.WriteLine("⏹️ Reminder cancelled.");
+                        break;
                     }
 
-                    var smtp = new SmtpClient("smtp.gmail.com", 587)
+                    // wait 24 hours for next cycle
+                    try
                     {
-                        Credentials = new NetworkCredential(email, password),
-                        EnableSsl = true
-                    };
-
-                    var mail = new MailMessage();
-                    mail.From = new MailAddress(email);
-                    mail.To.Add(email); // You can change this to any recipient
-                    mail.Subject = "Daily Habit Reminder";
-
-                    var body = new StringBuilder("📌 Your habits for today:\n\n");
-                    foreach (var habit in habits)
-                    {
-                        body.AppendLine($"- {habit.Name}");
+                        await Task.Delay(TimeSpan.FromDays(1), _cts.Token);
                     }
-                    mail.Body = body.ToString();
-
-                    smtp.Send(mail);
-                    Console.WriteLine("✅ Email sent successfully.");
+                    catch (TaskCanceledException)
+                    {
+                        Console.WriteLine("⏹️ Reminder cancelled after first send.");
+                        break;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"❌ Email failed: {ex.Message}");
-                }
+            });
+        }
 
-            }, null, timeUntilReminder, TimeSpan.FromDays(1));
+        public void StopReminders()
+        {
+            _cts.Cancel();
+        }
+
+        // making the method overridable for testing (not adding interfaces as don't want to change the structure)
+        protected virtual async Task SendEmailAsync(List<Habit> habits)
+        {
+            var email = Environment.GetEnvironmentVariable("GOOGLE_APP_EMAIL");
+            var password = Environment.GetEnvironmentVariable("GOOGLE_APP_PASSWORD");
+
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            {
+                Console.WriteLine("❌ Missing email credentials.");
+                return;
+            }
+
+            using var smtp = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential(email, password),
+                EnableSsl = true
+            };
+
+            var body = new StringBuilder("📌 Your habits for today:\n\n");
+            foreach (var habit in habits)
+            {
+                body.AppendLine($"- {habit.Name}");
+            }
+
+            var mail = new MailMessage(email, email)
+            {
+                Subject = "Daily Habit Reminder",
+                Body = body.ToString()
+            };
+
+            await smtp.SendMailAsync(mail);
+            Console.WriteLine($"✅ Email sent at {DateTime.Now:T}");
         }
     }
 }

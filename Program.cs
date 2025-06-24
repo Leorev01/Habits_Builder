@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.Design;
 using HabitTrackerApp.Classes;
 
 namespace HabitTrackerApp
@@ -8,6 +7,7 @@ namespace HabitTrackerApp
     {
 
         static List<Habit> habits = Storage.Load();
+        static ReminderService reminderService = new ReminderService();
 
         static void Main(string[] args)
         {
@@ -36,7 +36,7 @@ namespace HabitTrackerApp
                     case "4": ViewHabitHistory(); break;
                     case "5": DeleteHabit(); break;
                     case "6": SetEmailReminders(); break;
-                    case "7": Storage.Save(habits); return;
+                    case "7": Storage.Save(habits); reminderService.StopReminders(); return;
                     default: Console.WriteLine("❗ Invalid option."); break;
                 }
             }
@@ -100,12 +100,14 @@ namespace HabitTrackerApp
             ViewHabits();
             Console.Write("Select habit number to delete: ");
             var value = Console.ReadLine();
-            if(int.TryParse(value, out int index) && index >= 1 && index <= habits.Count){
-                habits.RemoveAt(index-1);
+            if (int.TryParse(value, out int index) && index >= 1 && index <= habits.Count)
+            {
+                habits.RemoveAt(index - 1);
                 Console.WriteLine($"❌ Deleted habit: {index}");
                 Storage.Save(habits);
             }
-            else{
+            else
+            {
                 Console.WriteLine("❌ Invalid habit number.");
             }
         }
@@ -120,10 +122,9 @@ namespace HabitTrackerApp
                 Console.WriteLine("❌ Invalid time format.");
                 return;
             }
-            var reminders = new ReminderService();
-            reminders.SendReminder(habits, reminderTime);
+            reminderService.SendReminders(habits, reminderTime);
             Console.WriteLine($"⏰ Reminder set for {reminderTime}.");
-            
+
         }
     }
 }
