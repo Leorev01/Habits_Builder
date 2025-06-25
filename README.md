@@ -27,5 +27,5 @@ A simple C# console application to help you build and maintain daily habits. It 
 
 1. **Clone this repository**
    ```bash
-   git clone https://github.com/your-username/habit-tracker-app.git
+   git clone https://github.com/Leorev01/Habits_Builder.git
    cd habit-tracker-app
