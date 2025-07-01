@@ -83,7 +83,7 @@ git push origin branch-name
 
 If you find a bug or have an idea for a new feature, please follow these steps:
 
-1. Check the [Issues](https://github.com/your-repo/issues) to see if a similar issue or suggestion already exists.
+1. Check the [Issues](https://github.com/Habits_Builder/issues) to see if a similar issue or suggestion already exists.
 
 2. Create a new issue describing the problem or feature request in detail.  
    - For bugs, include steps to reproduce, expected vs actual behavior, and any error messages.  
