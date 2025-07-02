@@ -30,6 +30,15 @@ A simple C# console application to help you build and maintain daily habits. It 
    git clone https://github.com/Leorev01/Habits_Builder.git
    cd habit-tracker-app
 
-## Contributing
+## 📝 Contributing
 
 Please read our [contribution guidelines](CONTRIBUTING.md) to learn how to propose changes and report issues.
+
+## 🌍 Localization
+
+This project supports multiple languages with dynamic runtime switching.
+
+📝 To add a new language, see [Adding a new language guide](LOCALIZATION_GUIDE.md).
+
+
+
