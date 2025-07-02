@@ -31,7 +31,7 @@ Example format in `Languages.json`:
 
 ## 2. Add a localization file for the new language
 
-In the [`Resources/Localizations`](Resources/Localizations) folder, create a new JSON file named after the language code, e.g. [`en.json`](Resources/Localizations/en.json) for Spanish.
+In the [`Resources/Localizations`](Resources/Localizations) folder, create a new JSON file named after the language code, e.g. `en.json` for Spanish.
 
 The content of this file must be a key-value dictionary where:
 
