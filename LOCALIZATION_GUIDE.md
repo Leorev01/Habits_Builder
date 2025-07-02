@@ -6,7 +6,7 @@ This guide explains how to add support for a new language to the **Habit Tracker
 
 ## 1. Add the language to `Languages.json`
 
-The `Languages.json` file is located in the `Resources` folder.
+The `Languages.json` file is located in the [`Resources`](Resources) folder.
 It contains the list of supported languages.
 
 Example format in `Languages.json`:
@@ -31,7 +31,7 @@ Example format in `Languages.json`:
 
 ## 2. Add a localization file for the new language
 
-In the `Resources/Localizations` folder, create a new JSON file named after the language code, e.g. `es.json` for Spanish.
+In the [`Resources/Localizations`](Resources/Localizations) folder, create a new JSON file named after the language code, e.g. `es.json` for Spanish.
 
 The content of this file must be a key-value dictionary where:
 
@@ -103,5 +103,22 @@ Below is an example based on the existing `en.json` file:
 
 ---
 
+<details>
+  <summary>Additional Information: Configuration Files Location</summary>
+
+Configuration files such as user settings are stored in the application data folder specific to your operating system. For example:
+
+- **Windows:**  
+  `%AppData%\HabitTrackerApp\settings.json`  
+  (usually something like `C:\Users\<UserName>\AppData\Roaming\HabitTrackerApp\settings.json`)
+
+- **Linux/macOS:**  
+  Typically under the user's home directory, e.g.  
+  `~/.config/HabitTrackerApp/settings.json`
+
+You can access and modify these files if needed, but be careful to keep the JSON structure valid.
+
+</details>
+
 ✅ **That’s it!**
-If you need a template JSON file or examples, check the existing `en.json` or ask the team for the latest localization templates.
+If you need a template JSON file or examples, check the existing [`en.json`](Resources/Localizations/en.json) or ask the team for the latest localization templates.
