@@ -1,3 +1,4 @@
+using HabitTrackerApp.Classes.Services;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -26,7 +27,8 @@ namespace HabitTrackerApp.Classes
                     // if delay has negative value, make it 0
                     if (delay < TimeSpan.Zero)
                         delay = TimeSpan.Zero;
-                    Console.WriteLine($"⏳ Waiting {delay.TotalMinutes:F1} min until next reminder at {nextRun}");
+
+                    Console.WriteLine(string.Format(LocalizationService.GetString("ReminderWaiting"), delay.TotalMinutes, nextRun));
 
                     try
                     {
@@ -35,7 +37,7 @@ namespace HabitTrackerApp.Classes
                     }
                     catch (TaskCanceledException)
                     {
-                        Console.WriteLine("⏹️ Reminder cancelled.");
+                        Console.WriteLine(LocalizationService.GetString("ReminderCancelled"));
                         break;
                     }
 
@@ -46,7 +48,7 @@ namespace HabitTrackerApp.Classes
                     }
                     catch (TaskCanceledException)
                     {
-                        Console.WriteLine("⏹️ Reminder cancelled after first send.");
+                        Console.WriteLine(LocalizationService.GetString("ReminderCancelledAfterSend"));
                         break;
                     }
                 }
@@ -66,7 +68,7 @@ namespace HabitTrackerApp.Classes
 
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
-                Console.WriteLine("❌ Missing email credentials.");
+                Console.WriteLine(LocalizationService.GetString("MissingEmailCredentials"));
                 return;
             }
 
@@ -76,20 +78,20 @@ namespace HabitTrackerApp.Classes
                 EnableSsl = true
             };
 
-            var body = new StringBuilder("📌 Your habits for today:\n\n");
+            var body = new StringBuilder(LocalizationService.GetString("EmailBodyHeader"));
             foreach (var habit in habits)
             {
-                body.AppendLine($"- {habit.Name}");
+                body.AppendLine(string.Format(LocalizationService.GetString("EmailBodyHabitLine"), habit.Name));
             }
 
             var mail = new MailMessage(email, email)
             {
-                Subject = "Daily Habit Reminder",
+                Subject = LocalizationService.GetString("EmailSubject"),
                 Body = body.ToString()
             };
 
             await smtp.SendMailAsync(mail);
-            Console.WriteLine($"✅ Email sent at {DateTime.Now:T}");
+            Console.WriteLine(string.Format(LocalizationService.GetString("EmailSent"), DateTime.Now));
         }
     }
 }

@@ -1,3 +1,5 @@
+using HabitTrackerApp.Classes.Services;
+
 namespace HabitTrackerApp.Classes
 {
     public class Habit
@@ -16,11 +18,11 @@ namespace HabitTrackerApp.Classes
             if (!CompletionDates.Contains(today))
             {
                 CompletionDates.Add(today);
-                Console.WriteLine($"✅ '{Name}' marked as complete for {today.ToShortDateString()}.");
+                Console.WriteLine(string.Format(LocalizationService.GetString("HabitMarkedComplete"), Name, today.ToShortDateString()));
             }
             else
             {
-                Console.WriteLine("⚠️ You've already marked this habit complete today.");
+                Console.WriteLine(LocalizationService.GetString("HabitAlreadyCompletedToday"));
             }
         }
 
@@ -48,13 +50,11 @@ namespace HabitTrackerApp.Classes
 
         public void ShowHistory()
         {
-            Console.WriteLine($"📅 History for '{Name}':");
+            Console.WriteLine(string.Format(LocalizationService.GetString("HabitHistoryFor"), Name));
             foreach (var date in CompletionDates.OrderBy(d => d))
             {
-                Console.WriteLine($"- {date.ToShortDateString()}");
+                Console.WriteLine(string.Format(LocalizationService.GetString("HabitHistoryDateLine"), date.ToShortDateString()));
             }
         }
-        
     }
-
 }
