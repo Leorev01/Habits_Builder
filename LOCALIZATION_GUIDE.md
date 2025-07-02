@@ -1,12 +1,12 @@
 # Developer Guide: Adding New Languages
 
-This guide explains how to add support for a new language to the Habit Tracker console application.
+This guide explains how to add support for a new language to the **Habit Tracker console application**.
 
 ---
 
 ## 1. Add the language to `Languages.json`
 
-The `Languages.json` file is located in the `Resources` folder.  
+The `Languages.json` file is located in the `Resources` folder.
 It contains the list of supported languages.
 
 Example format in `Languages.json`:
@@ -14,26 +14,35 @@ Example format in `Languages.json`:
 ```json
 {
   "en": "English",
-  "uk": "Ukrainian",
-  "fr": "French",
-  "es": "Spanish"  // add new languages here
+  "uk": "Українська",
+  "fr": "Français",
+  "ja": "日本語",
+  "es": "Español"  // add new languages here
 }
 ```
 
-- Key: ISO 639-1 two-letter language code (e.g. "en", "uk", "fr", "es").
+* **Key**: ISO 639-1 two-letter language code (e.g. `"en"`, `"uk"`, `"fr"`, `"es"`).
+* The language **code** (like `"en"`, `"uk"`, `"fr"`) must always be a valid [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag) — typically two-letter codes.
+* However, the **display name** in `Languages.json` can be written in **any script you like**, not only in Latin letters.
+  For example: `"Українська"`, `"日本語"`, `"Español"` are all valid.
+* This means your language selection menu can show names in native alphabets for a better user experience.
 
-- Value: Name of the language in English. This ensures that the language selection menu always shows languages in Latin characters.
+---
 
 ## 2. Add a localization file for the new language
 
-In the Resources/Localizations folder, create a new JSON file named after the language code, e.g. es.json for Spanish.
+In the `Resources/Localizations` folder, create a new JSON file named after the language code, e.g. `es.json` for Spanish.
 
 The content of this file must be a key-value dictionary where:
-- Key: is a unique identifier used in the app.
-- Value: is the translated text for that language.
+
+* **Key**: is a unique identifier used in the app.
+* **Value**: is the translated text for that language.
+
+---
 
 ## 3. Example of a localization file
-Below is an example based on the existing English (en.json) file:
+
+Below is an example based on the existing `en.json` file:
 
 ```json
 {
@@ -77,13 +86,22 @@ Below is an example based on the existing English (en.json) file:
 }
 ```
 
-4. Keeping localization files up to date
-- Whenever you add new features or messages to the app, be sure to update all existing localization files to include the new keys and their translations.
-- The application always uses these keys to display text. If a key is missing in a specific language file, it will fallback to English (or display the key itself if not found).
+---
 
-5. Testing
-- After adding a language, run the app and test switching to the new language.
-- Make sure all menu items, prompts, and system messages are displayed correctly.
+## 4. Keeping localization files up to date
 
-✅ That’s it!
-If you need a template JSON file or examples, look in the existing en.json or ask the team for the latest localization templates.
+* Whenever you add new **features or messages** to the app, you **must update all localization files** to include the new keys and their translations.
+* The application always uses these keys to display text.
+  If a key is missing in a specific language file, it will **fallback to English** (or display the key itself if not found).
+
+---
+
+## 5. Testing
+
+* After adding a new language, run the app and test switching to that language.
+* Make sure all menu items, prompts, and system messages are displayed correctly.
+
+---
+
+✅ **That’s it!**
+If you need a template JSON file or examples, check the existing `en.json` or ask the team for the latest localization templates.
