@@ -1,5 +1,6 @@
 ﻿using HabitTrackerApp.Classes;
 using HabitTrackerApp.Classes.Services;
+using HabitTrackerApp.Services; // Add this using statement for ThemeService
 
 namespace HabitTrackerApp
 {
@@ -12,6 +13,9 @@ namespace HabitTrackerApp
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
+
+            // Apply the saved theme when the application starts
+            ThemeService.ApplySavedTheme();
 
             await LanguageService.LoadLanguagesAsync();
             await LocalizationService.InitializeAsync();
@@ -33,6 +37,9 @@ namespace HabitTrackerApp
                 Console.WriteLine(LocalizationService.GetString("MenuDeleteHabit"));
                 Console.WriteLine(LocalizationService.GetString("MenuSetReminders"));
                 Console.WriteLine(LocalizationService.GetString("MenuChangeLanguage"));
+                // New menu option for toggling theme
+                Console.WriteLine($"{LocalizationService.GetString("MenuToggleTheme")} {ThemeService.GetThemeIcon()}");
+                // Updated Exit option
                 Console.WriteLine(LocalizationService.GetString("MenuExit"));
 
                 var input = Console.ReadLine();
@@ -46,7 +53,16 @@ namespace HabitTrackerApp
                     case "5": DeleteHabit(); break;
                     case "6": SetEmailReminders(); break;
                     case "7": await ChangeLanguageAsync(); break;
-                    case "8": Storage.Save(habits); reminderService.StopReminders(); return;
+                    case "8": // New case for toggling theme
+                        ThemeService.ToggleTheme();
+                        // After toggling, we might want to re-display the menu
+                        // to show the updated theme icon immediately.
+                        // The while(true) loop will handle this.
+                        break;
+                    case "9": // Updated case for Exit
+                        Storage.Save(habits);
+                        reminderService.StopReminders();
+                        return;
                     default:
                         Console.WriteLine(LocalizationService.GetString("InvalidOption"));
                         break;
@@ -63,7 +79,7 @@ namespace HabitTrackerApp
             int i = 1;
             foreach (var lang in languages)
             {
-                // Виводимо мови у форматі: 1. English (en)
+                // Display languages in format: 1. English (en)
                 Console.WriteLine($"{i}. {lang.Value} ({lang.Key})");
                 i++;
             }
@@ -73,6 +89,8 @@ namespace HabitTrackerApp
             {
                 string selectedCode = languages.ElementAt(choice - 1).Key;
                 await LocalizationService.SetLanguageAsync(selectedCode);
+                // After changing language, re-apply theme to ensure all new strings are displayed with correct colors
+                ThemeService.ApplySavedTheme();
             }
             else
             {
