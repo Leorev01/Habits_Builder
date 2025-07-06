@@ -27,10 +27,10 @@ A simple C# console application to help you build and maintain daily habits. It 
 ## 📥 Installation
 
 1. **Clone this repository**
-   ```bash
+```bash
    git clone [https://github.com/Leorev01/Habits_Builder.git](https://github.com/Leorev01/Habits_Builder.git)
    cd habit-tracker-app
-
+```
 ## 📝 Contributing
 
 Please read our [contribution guidelines](CONTRIBUTING.md) to learn how to propose changes and report issues.
