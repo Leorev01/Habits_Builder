@@ -11,7 +11,7 @@ A simple C# console application to help you build and maintain daily habits. It 
 - ✅ Mark habits as completed
 - ⏰ Schedule **daily email reminders**
 - 💾 Data persistence using local file storage
-- 🎨 **Dark Mode support** (See: [DARK_MODE.md](DARK_MODE.md))
+- 🎨 **Dark Mode support** (See: [THEME_SERVICE.md](THEME_SERVICE.md))
 
 ---
 
