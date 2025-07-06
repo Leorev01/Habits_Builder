@@ -11,6 +11,7 @@ A simple C# console application to help you build and maintain daily habits. It 
 - ✅ Mark habits as completed
 - ⏰ Schedule **daily email reminders**
 - 💾 Data persistence using local file storage
+- 🎨 **Dark Mode support** (See: [DARK_MODE.md](DARK_MODE.md))
 
 ---
 
@@ -26,9 +27,9 @@ A simple C# console application to help you build and maintain daily habits. It 
 ## 📥 Installation
 
 1. **Clone this repository**
-   ```bash
-   git clone https://github.com/Leorev01/Habits_Builder.git
-   cd habit-tracker-app
+   ```bash
+   git clone [https://github.com/Leorev01/Habits_Builder.git](https://github.com/Leorev01/Habits_Builder.git)
+   cd habit-tracker-app
 
 ## 📝 Contributing
 
@@ -39,6 +40,3 @@ Please read our [contribution guidelines](CONTRIBUTING.md) to learn how to propo
 This project supports multiple languages with dynamic runtime switching.
 
 📝 To add a new language, see [Adding a new language guide](LOCALIZATION_GUIDE.md).
-
-
-
