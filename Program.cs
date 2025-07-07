@@ -74,22 +74,23 @@ namespace HabitTrackerApp
         {
             var languages = LanguageService.GetLanguages();
 
+            Console.WriteLine();
             Console.WriteLine(LocalizationService.GetString("MenuChangeLanguage").Replace("7.", "").Trim() + ":");
+            Console.WriteLine();
 
             int i = 1;
             foreach (var lang in languages)
             {
-                // Display languages in format: 1. English (en)
                 Console.WriteLine($"{i}. {lang.Value} ({lang.Key})");
                 i++;
             }
+            Console.WriteLine();
 
             var input = Console.ReadLine();
             if (int.TryParse(input, out int choice) && choice >= 1 && choice <= languages.Count)
             {
                 string selectedCode = languages.ElementAt(choice - 1).Key;
                 await LocalizationService.SetLanguageAsync(selectedCode);
-                // After changing language, re-apply theme to ensure all new strings are displayed with correct colors
                 ThemeService.ApplySavedTheme();
             }
             else

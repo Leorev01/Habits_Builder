@@ -10,17 +10,6 @@ namespace HabitTrackerApp.Classes.Services
         private static Dictionary<string, string> _fallbackStrings = new();
 
         private static CultureInfo _currentCulture;
-
-        // List of available languages (CultureInfo)
-        private static readonly List<CultureInfo> AvailableCultures = new()
-        {
-            //new CultureInfo("en"),
-            //new CultureInfo("uk"),
-            //new CultureInfo("fr"),
-            //new CultureInfo("ru"),
-            //new CultureInfo("it"),
-        };
-
         public static event Action? LanguageChanged;
 
         public static CultureInfo CurrentCulture
@@ -40,7 +29,7 @@ namespace HabitTrackerApp.Classes.Services
         {
             var savedCultureName = SettingsService.LoadSetting<string>("Language") ?? "en";
             var culture = new CultureInfo(savedCultureName);
-            if (!AvailableCultures.Contains(culture))
+            if (!LanguageService.IsLanguageSupported(culture.Name))
                 culture = new CultureInfo("en");
 
             await SetLanguageAsync(culture.Name);
@@ -105,11 +94,6 @@ namespace HabitTrackerApp.Classes.Services
                 // If the key is not found, return the key itself — to make it visible
                 return key;
             }
-        }
-
-        internal static List<string> GetAvailableLanguages()
-        {
-            return AvailableCultures.Select(c => c.EnglishName).ToList();
         }
 
     }
