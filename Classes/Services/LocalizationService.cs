@@ -18,6 +18,7 @@ namespace HabitTrackerApp.Classes.Services
             new CultureInfo("uk"),
             new CultureInfo("fr"),
             new CultureInfo("ru"),
+            new CultureInfo("it"),
         };
 
         public static event Action? LanguageChanged;
