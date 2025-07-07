@@ -97,6 +97,7 @@ namespace HabitTrackerApp
                 Console.WriteLine($"{i}. {lang.Value} ({lang.Key})");
                 i++;
             }
+            Console.WriteLine();
 
             Console.WriteLine();
             Console.Write(LocalizationService.GetString("SelectLanguage"));
