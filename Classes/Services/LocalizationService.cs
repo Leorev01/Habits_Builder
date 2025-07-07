@@ -14,11 +14,11 @@ namespace HabitTrackerApp.Classes.Services
         // List of available languages (CultureInfo)
         private static readonly List<CultureInfo> AvailableCultures = new()
         {
-            new CultureInfo("en"),
-            new CultureInfo("uk"),
-            new CultureInfo("fr"),
-            new CultureInfo("ru"),
-            new CultureInfo("it"),
+            //new CultureInfo("en"),
+            //new CultureInfo("uk"),
+            //new CultureInfo("fr"),
+            //new CultureInfo("ru"),
+            //new CultureInfo("it"),
         };
 
         public static event Action? LanguageChanged;
