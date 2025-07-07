@@ -202,8 +202,9 @@ This project supports multiple languages with dynamic runtime switching:
 
 - 🇺🇸 English (default)
 - 🇮🇹 Italian
-- 🇪🇸 Spanish
 - 🇫🇷 French
+- 🇺🇦 Ukrainian
+- 🇷🇺 Russian
 
 📝 To add a new language, see [Adding a new language guide](LOCALIZATION_GUIDE.md).
 
