@@ -221,6 +221,10 @@ project.lock.json
 # UWP Projects
 AppPackages/
 
+#Google API Credentials
+credentials.json
+token.json
+
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
