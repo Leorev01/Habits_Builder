@@ -181,11 +181,12 @@ HabitTrackerApp/
 │       ├── LocalizationService.cs  # Multi-language support
 │       ├── LanguageService.cs      # Language management
 │       └── ThemeService.cs         # Theme switching
-├── Resources/                      # Localization files
-│   ├── Strings.resx               # English (default)
-│   ├── Strings.it.resx            # Italian
-│   ├── Strings.es.resx            # Spanish
-│   └── Strings.fr.resx            # French
+├── Resources/                      # JSON Localization files
+│   ├── en.json                    # English (default)
+│   ├── it.json                    # Italian
+│   ├── uk.json                    # Ukranian
+│   ├── fr.json                    # French
+|   └── ru.json                    # Russian
 ├── credentials.json               # Google API credentials (not in repo)
 ├── .env                          # Email configuration (not in repo)
 ├── habits.json                   # Habit data storage
