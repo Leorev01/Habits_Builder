@@ -29,27 +29,6 @@ Example format in `Languages.json`:
 
 ---
 
-⚠️ **Important:**  
-> You do **not** need to manually update the list of cultures in the `LocalizationService` class.  
-> 
-> ```csharp
-> public static class LocalizationService
-> {
->     // List of available languages (CultureInfo)
->     private static readonly List<CultureInfo> AvailableCultures = new()
->     {
->         //new CultureInfo("en"),
->         //new CultureInfo("uk"),
->         //new CultureInfo("fr"),
->         //new CultureInfo("ru"),
->         //new CultureInfo("it"),
->     };
-> }
-> ```
->  
-> This list is **automatically populated by loading `Languages.json`**, so you only need to add your language there.
-
-
 ## 2. Add a localization file for the new language
 
 In the [`Resources/Localizations`](Resources/Localizations) folder, create a new JSON file named after the language code, e.g. `en.json` for Spanish.
